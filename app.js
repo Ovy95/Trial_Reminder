@@ -78,13 +78,14 @@ app.post('/send', (req, res) => {
     let date = (req.body.picker)
     let month = date.substring(5,7);
     let day = date.substring(8,10);
+    let year = date.substring(0,4);
     // Time values being stored
     let time = (req.body.time)
-    let hours = time.substring(0,2)
-    let minute = time.substring(3,5)
+    let hours = time.substring(0,2);
+    let minute = time.substring(3,5);
     console.log(` Will be sent at ${hours};${minute} on the ${day}/${month}`)
-    cron.schedule(`${minute} ${hours} ${day} ${month} *`, () => {
-      console.log(` Will be sent at ${minute} ${hours} ${day} ${month}`);
+
+    let scheduledEmails = cron.schedule(`${minute} ${hours} ${day} ${month} * `, () => {
         transporter.sendMail(mailOptions, function(error, info) {
           if (error) {
             console.log(error);
@@ -93,10 +94,12 @@ app.post('/send', (req, res) => {
             console.log("Message sent: %s", info.messageId);
           }
         });
+        // This stops emails stops yearly emails
+      scheduledEmails.destroy();
     });
-    res.render('contact',{layout: false,msg:'Email has been sent'});
+    res.render('contact',{layout: false,msg:`Your reminder will be sent to you at ${time} on the ${day}/${month}/${year}` });
   });
   cron.schedule('* * * * *', () => {
-    console.log('running a task every MInitue just COnsoleLOging THo');
+    console.log('running a task every Minitue');
  });
 app.listen(3000, () => console.log('server started...'));
