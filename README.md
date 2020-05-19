@@ -15,6 +15,14 @@ Testing to be added
 
 
 # ScreenShots
+Each screenshot shows 
+
+* Current app 
+* Confirmed time and date message when submitted
+* Command line Confirmation of both text and email was sent at the time entered
+* Screenshot of the email sent 
+* Screenshot of the text message 
+
 
 ![Screenshot 2020-05-19 at 15 03 07](https://user-images.githubusercontent.com/57540755/82337732-009b6a80-99e4-11ea-8eb3-396c68751e3c.png)
 ![Screenshot 2020-05-19 at 15 03 23](https://user-images.githubusercontent.com/57540755/82337979-422c1580-99e4-11ea-9667-71bfae6fb98f.png)
