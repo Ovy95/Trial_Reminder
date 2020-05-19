@@ -30,16 +30,17 @@ app.post('/send', (req, res) => {
   // This is whats going to be pushed in the email so its using the form details as you can see plus whatever else you want in there
   const output = `
   
-  <p>You have a new contact request</p>
-  <h3>Trail Reminder</3>
+  
+  <h3>Trial Reminder</3>
   <ul>
   <li>Company Name: ${req.body.name}</li>
   <li>Website: ${req.body.company}</li>
-  <li>Email: ${req.body.email}</li>
-  <li>Phone: ${req.body.phone}</li>
   </ul>
   <h3>Message</h3>
-  <p>${req.body.message}</p>
+  <p>This is a reminder message about the free trial ending for ${req.body.name} is tomorrow. Here is a link to the website ${req.body.company}. Here is the custom message you wrote 
+  ${req.body.message}
+  All the best Trial Reminder.
+  Making trials free again</p>
   `;
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({ 
@@ -64,7 +65,7 @@ app.post('/send', (req, res) => {
     let mailOptions = ({
       from: 'freetrailerreminder@gmail.com', // sender address
       to: email, // email they put in the form
-      subject: "Free TRAIL REMINDER", // Subject line
+      subject: "Trial REMINDER", // Subject line
       text: "", // plain text body
       html: output // html body
     });
@@ -84,8 +85,9 @@ app.post('/send', (req, res) => {
     var params = {
       'originator': 'MessageBird',
       'recipients': [`${phoneNumber}`],
-      'body': `This is a reminder message about the free trailer ending for ${req.body.company} is tomorrow. Here is the message you wrote ${req.body.message}.
-      All the best TRAIL REMINDER making trails free again` 
+      'body': `This is a reminder message about the free trial ending for ${req.body.company} is tomorrow. Here is the message you wrote ${req.body.message}.
+      All the best Trial Reminder.
+       Making trials free again` 
     };
     let scheduledSMS = cron.schedule(`${minute} ${hours} ${day} ${month} * `, () => {
     messagebird.messages.create(params, function (err, response) {
