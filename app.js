@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer');
 let cron = require('node-cron');
 
 const app = express();
+var messagebird = require('messagebird')('8TnQekO4w47Zd6JHLSDzYghY6');
 
 // view engine setup 
 app.engine('handlebars', exphbs());
@@ -55,8 +56,8 @@ app.post('/send', (req, res) => {
       secure: false, // true for 465, false for other ports
       // service: 'gmail',
       auth: {
-        user: '', // generated ethereal user
-        pass: ''// generated ethereal password
+        user: 'freetrailerreminder@gmail.com', // generated ethereal user
+        pass: 'Makers123!'// generated ethereal password
       },
       // This allows us to run it locally and send off the email to the cleint in local mode
       tls:{
@@ -84,6 +85,23 @@ app.post('/send', (req, res) => {
     let hours = time.substring(0,2);
     let minute = time.substring(3,5);
     console.log(` Will be sent at ${hours};${minute} on the ${day}/${month}`)
+
+    let phoneNumber = (req.body.phone)
+    var params = {
+      'originator': 'MessageBird',
+      'recipients': [`${phoneNumber}`],
+      'body': `This is a reminder message about the free trailer ending for ${req.body.company} is tomorrow. Here is the message you wrote ${req.body.message}.
+      All the best TRAIL REMINDER making trails free again` 
+    };
+    let scheduledSMS = cron.schedule(`${minute} ${hours} ${day} ${month} * `, () => {
+    messagebird.messages.create(params, function (err, response) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(response);
+    });
+    scheduledSMS.destroy();
+    });
 
     let scheduledEmails = cron.schedule(`${minute} ${hours} ${day} ${month} * `, () => {
         transporter.sendMail(mailOptions, function(error, info) {
