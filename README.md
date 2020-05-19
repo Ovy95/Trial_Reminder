@@ -6,12 +6,13 @@ Currently unfinished needs designing along with deloyment on a live site. Along 
 
 Little fix ups and next stages for completion 
 
-Email  address changed
+* Email  address changed
 
-Design CSS styling
-The email message to be alter saying the due date will be tomorrow like it does in the text message.
-Deployment
-Testing to be added
+* Design CSS styling
+* Text message to be altered
+* The email message to be alter saying the due date will be tomorrow like it does in the text message.
+* Deployment
+* Testing to be added
 
 
 # ScreenShots
