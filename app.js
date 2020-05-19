@@ -56,8 +56,8 @@ app.post('/send', (req, res) => {
       secure: false, // true for 465, false for other ports
       // service: 'gmail',
       auth: {
-        user: 'freetrailerreminder@gmail.com', // generated ethereal user
-        pass: 'Makers123!'// generated ethereal password
+        user: '', // generated ethereal user
+        pass: ''// generated ethereal password
       },
       // This allows us to run it locally and send off the email to the cleint in local mode
       tls:{
