@@ -9,17 +9,15 @@ let cron = require('node-cron');
 const app = express();
 var messagebird = require('messagebird')('8TnQekO4w47Zd6JHLSDzYghY6');
 
-// view engine setup 
+
 app.engine('handlebars', exphbs());
 app.set('view engine','handlebars');
 
-// static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// body Parser Middleware
-// parse application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
+
 app.use(bodyParser.json());
 
 
@@ -42,11 +40,7 @@ app.post('/send', (req, res) => {
   </ul>
   <h3>Message</h3>
   <p>${req.body.message}</p>
-  `; 
-
-  //This just prints out the form infomation just to check
-  console.log(req.body)
-  // This saves the email from the form then sends it 
+  `;
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({ 
       
@@ -56,7 +50,7 @@ app.post('/send', (req, res) => {
       secure: false, // true for 465, false for other ports
       // service: 'gmail',
       auth: {
-        user: '', // generated ethereal user
+        user: '', // generated ethereal user  // Current hasn't got the email and password saved needs to be saved into an enviroment
         pass: ''// generated ethereal password
       },
       // This allows us to run it locally and send off the email to the cleint in local mode
@@ -69,9 +63,9 @@ app.post('/send', (req, res) => {
     // send mail with defined transport object
     let mailOptions = ({
       from: 'freetrailerreminder@gmail.com', // sender address
-      to: email, // list of receivers
+      to: email, // email they put in the form
       subject: "Free TRAIL REMINDER", // Subject line
-      text: "Hello world?", // plain text body
+      text: "", // plain text body
       html: output // html body
     });
 
@@ -115,9 +109,7 @@ app.post('/send', (req, res) => {
         // This stops emails stops yearly emails
       scheduledEmails.destroy();
     });
+    // This is a confirmation message printed out on the screen to say date and time message will be sent.
     res.render('contact',{layout: false,msg:`Your reminder will be sent to you at ${time} on the ${day}/${month}/${year}` });
   });
-  cron.schedule('* * * * *', () => {
-    console.log('running a task every Minitue');
- });
 app.listen(3000, () => console.log('server started...'));
