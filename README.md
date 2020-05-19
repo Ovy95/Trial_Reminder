@@ -15,7 +15,6 @@ Testing to be added
 
 
 # ScreenShots
-Each screenshot shows 
 
 * Current app 
 * Confirmed time and date message when submitted
