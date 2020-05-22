@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const path = require('path')
+const PORT = process.env.PORT || 5000
 
 const nodemailer = require('nodemailer');
 let cron = require('node-cron');
@@ -110,4 +111,4 @@ app.post('/send', (req, res) => {
     // This is a confirmation message printed out on the screen to say date and time message will be sent.
     res.render('contact',{layout: false,msg:`Your reminder will be sent to you at ${time} on the ${day}/${month}/${year}` });
   });
-app.listen(3000, () => console.log('server started...'));
+app.listen(PORT, () => console.log(`server started... on ${ PORT}`));
