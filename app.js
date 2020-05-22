@@ -1,3 +1,4 @@
+require('dotenv').config(); 
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
@@ -7,17 +8,14 @@ const nodemailer = require('nodemailer');
 let cron = require('node-cron');
 
 const app = express();
-var messagebird = require('messagebird')('8TnQekO4w47Zd6JHLSDzYghY6');
-
+var messagebird = require('messagebird')(process.env.API_KEY); 
 
 app.engine('handlebars', exphbs());
 app.set('view engine','handlebars');
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 
 
@@ -27,18 +25,17 @@ app.get('/', (req, res) => {
 });
 
 app.post('/send', (req, res) => { 
-  // This is whats going to be pushed in the email so its using the form details as you can see plus whatever else you want in there
   const output = `
-  
-  
   <h3>Trial Reminder</3>
   <ul>
   <li>Company Name: ${req.body.name}</li>
   <li>Website: ${req.body.company}</li>
   </ul>
-  <h3>Message</h3>
-  <p>This is a reminder message about the free trial ending for ${req.body.name} is tomorrow. Here is a link to the website ${req.body.company}. Here is the custom message you wrote 
-  ${req.body.message}
+  <p>This is a reminder message about the free trial ending for ${req.body.name} is tomorrow. Here is a link to the website ${req.body.company}.</p>
+  <h3>Custom Message you wrote</h3>
+  <p> ${req.body.message}</p>
+  <br>
+  <p>
   All the best Trial Reminder.
   Making trials free again</p>
   `;
@@ -51,19 +48,18 @@ app.post('/send', (req, res) => {
       secure: false, // true for 465, false for other ports
       // service: 'gmail',
       auth: {
-        user: '', // generated ethereal user  // Current hasn't got the email and password saved needs to be saved into an enviroment
-        pass: ''// generated ethereal password
+        user: process.env.EMAIL, 
+        pass: process.env.PASSWORD
       },
       // This allows us to run it locally and send off the email to the cleint in local mode
       tls:{
         rejectUnauthorized:false
       }
     });
-    //saves the value stored to send that email back to them
+    
     let email = (req.body.email)
-    // send mail with defined transport object
     let mailOptions = ({
-      from: 'freetrailerreminder@gmail.com', // sender address
+      from: process.env.EMAIL, // sender address
       to: email, // email they put in the form
       subject: "Trial REMINDER", // Subject line
       text: "", // plain text body

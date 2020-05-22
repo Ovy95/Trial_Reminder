@@ -1,21 +1,20 @@
 # Trial_reminders
 
-This is a simple app using Node, thought of the idea of when you forget to cancel "free" memberships when having to sign up with card details. An example of this is a well known delivery service who offer free membership then charge a year fee. Also has MessageBird API which allows you to send text messages the day before as well to remind you with the custom message you enter for both the email and text.  
+This is a simple app using Node, thought of the idea of when you forget to cancel "free" memberships when having to sign up with card details. An example of this is a well known delivery service who offer free membership then charge a year fee. Also has MessageBird API which allows you to send text messages the day before as well to remind you with the custom message you enter for both the email and text. 
 
-Currently unfinished needs designing along with deloyment on a live site. Along with email and password for sending the messages to be stored in an Enviroment.
+I used Node-Cron for scheduling the tasks for both the email and the sms messages. The date information is taken from the date picker on the form. Also I used the Destroy method which is in the Node-cron package to stop yearly email and sms messages. 
+
+Currently unfinished needs designing along with deloyment on a live site.
 
 Little fix ups and next stages for completion 
 
-* Email  address changed
-
 * Design CSS styling
-* Text message to be altered
-* The email message to be alter saying the due date will be tomorrow like it does in the text message.
 * Deployment
 * Testing to be added
 
 
 # ScreenShots
+ScreenShots need updating 
 
 * Current app 
 * Confirmed time and date message when submitted
