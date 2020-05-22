@@ -44,18 +44,18 @@ app.post('/send', (req, res) => {
     let transporter = nodemailer.createTransport({ 
       
       // THis domain name 
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      // service: 'gmail',
+      // host: 'trialreminder.herokuapp.com/',
+      // port: 587,
+      // secure: false, // true for 465, false for other ports
+      service: 'Gmail',
       auth: {
         user: process.env.EMAIL, 
         pass: process.env.PASSWORD
       },
       // This allows us to run it locally and send off the email to the cleint in local mode
-      tls:{
-        rejectUnauthorized:false
-      }
+      // tls:{
+      //   rejectUnauthorized:false
+      // }
     });
     
     let email = (req.body.email)
